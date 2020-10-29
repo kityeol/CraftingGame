@@ -30,6 +30,7 @@ public class FixItem : MonoBehaviour, IDropHandler
             GameManager.Instance.RemoveFromInventory(GameManager.Instance.draggingItem);
             GetComponent<Image>().sprite = ItemToFix;
             nextScreen.enabled = true;
+            GetComponent<Hint>().DestroyHint();
             Invoke("Destroy", 1);
         }
     }

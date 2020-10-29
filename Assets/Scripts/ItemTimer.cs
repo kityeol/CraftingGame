@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
-
-public class ItemTimer : MonoBehaviour
+[RequireComponent(typeof(Animator))]
+public class ItemTimer : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
+    Animator jiggleAnimator;
+
     private bool success = false;
     public Item itemToGet;
     public Image inventoryImage;
@@ -23,6 +26,8 @@ public class ItemTimer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        jiggleAnimator?.SetBool("IsHovering", true);
+        jiggleAnimator = GetComponent<Animator>();
         maxTimeRegen = timeTillRegen;
         timeTillRegen = 0;
     }
@@ -59,4 +64,15 @@ public class ItemTimer : MonoBehaviour
             }
         }
     }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        jiggleAnimator?.SetBool("IsHovering", true);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        jiggleAnimator?.SetBool("IsHovering", false);
+    }
+
 }
